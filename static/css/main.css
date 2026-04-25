@@ -58,6 +58,7 @@ body {
     position: relative;
     min-height: 100%;
     height: auto;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -96,6 +97,66 @@ img {
     height: 100vh;
 }
 
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(22px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes drift-in {
+	from {
+		opacity: 0;
+		transform: translateX(-18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes background-zoom {
+	from {
+		transform: scale(1.04);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes icon-float {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-6px);
+	}
+}
+
+@keyframes divider-grow {
+	from {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+	to {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+}
+
 .container {
 	display: grid;
 	height: 100vh;
@@ -111,6 +172,8 @@ img {
 
 .background img {
 	opacity: 0.8;
+	transform-origin: center;
+	animation: background-zoom 1400ms ease-out both;
 }
 
 /* Home Page */
@@ -125,6 +188,7 @@ img {
 	font-size: 80px;
 	padding-top: 12%;
     line-height: 115px;
+	animation: rise-in 900ms ease-out 150ms both;
 }
 
 .search-bar {
@@ -139,10 +203,18 @@ img {
 	justify-self: center;
 	align-self: center;
 	border-radius: 5px;
+	animation: rise-in 850ms ease-out 350ms both;
+	transition: box-shadow 180ms ease, transform 180ms ease;
 } 
 
 .search-bar:hover {
 	box-shadow: 0px 1px 5px #d9d9d9;
+	transform: translateY(-2px);
+}
+
+.search-bar:focus-within {
+	box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.18);
+	transform: translateY(-2px) scale(1.01);
 }
 
 .search-icon {
@@ -151,6 +223,12 @@ img {
 	left: 8px;
 	width: 20px;
 	height: 20px;
+	transition: transform 180ms ease;
+}
+
+.search-bar:focus-within .search-icon,
+.search-bar:hover .search-icon {
+	transform: scale(1.08);
 }
 
 #search {
@@ -168,6 +246,7 @@ img {
 
 .city-header {
 	padding-top: 4%;
+	animation: rise-in 750ms ease-out both;
 }
 
 .city-header h1 {
@@ -186,10 +265,13 @@ img {
 	position: absolute;
 	top: 3%;
 	left: 3%;
+	animation: drift-in 700ms ease-out both;
+	transition: box-shadow 180ms ease, transform 180ms ease;
 }
 
 .change-button:hover {
 	box-shadow: 0px 1px 5px #d9d9d9;
+	transform: translateX(-2px);
 }
 
 .chevron-icon {
@@ -217,6 +299,7 @@ img {
 	margin-bottom: 3%;
 	display: grid;
 	grid-template-columns: repeat(2, auto);
+	animation: rise-in 750ms ease-out 150ms both;
 }
 
 #current-temp {
@@ -240,6 +323,7 @@ img {
 	height: 50px;
 	align-self: center;
 	padding-top: 10px;
+	animation: icon-float 2800ms ease-in-out infinite;
 }
 
 .forecast-text {
@@ -253,6 +337,8 @@ img {
 	border-top: 1px solid black;
 	width: 70%;
 	justify-self: center;
+	transform-origin: center;
+	animation: divider-grow 650ms ease-out 300ms both;
 }
 
 .five-day {
@@ -267,6 +353,32 @@ img {
 	grid-template-rows: repeat(3, auto);
 	justify-items: center;
 	align-items: center;
+	animation: rise-in 650ms ease-out both;
+	transition: transform 180ms ease;
+}
+
+.forecast-item:hover {
+	transform: translateY(-5px);
+}
+
+.forecast-item:nth-child(1) {
+	animation-delay: 250ms;
+}
+
+.forecast-item:nth-child(2) {
+	animation-delay: 330ms;
+}
+
+.forecast-item:nth-child(3) {
+	animation-delay: 410ms;
+}
+
+.forecast-item:nth-child(4) {
+	animation-delay: 490ms;
+}
+
+.forecast-item:nth-child(5) {
+	animation-delay: 570ms;
 }
 
 /* Error Page */
@@ -278,6 +390,7 @@ img {
     z-index: 2;
     color: white;
     font-size: 50px;
+	animation: rise-in 850ms ease-out 150ms both;
 }
 
 #error-background {
@@ -293,6 +406,18 @@ img {
     position: absolute;
     bottom: 0;
 	width: 100%;
+	animation: fade-in 900ms ease-out 650ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 1ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 1ms !important;
+	}
 }
 
 /* Media Queries for Home Page */
